@@ -31,16 +31,31 @@ class FormatButton extends StatelessWidget {
         child: DropdownButton<String>(
           value: newValue,
           elevation: 0,
-
           style: const TextStyle(color: Colors.deepPurple),
           underline: Container(
             height: 1,
             color: Colors.blue,
           ),
           onChanged: (String? newValue) {
+
+            print("rohannn:: ${newValue}");
+            if (newValue == "Week") {
+              // availableCalendarFormats[CalendarFormat.week];
+              onTap(_nextFormat(CalendarFormat.week));
+            } else if (newValue == "2 Week") {
+              // availableCalendarFormats[CalendarFormat.twoWeeks];
+              onTap(_nextFormat(CalendarFormat.twoWeeks));
+            } else if (newValue == "Month") {
+              // availableCalendarFormats[CalendarFormat.month];
+              onTap(_nextFormat(CalendarFormat.month));
+            }
+
+
+
             // setState(() {
             //   dropdownValue = newValue!;
             // });
+
           },
           items: <String>['Week', '2 Week', 'Month']
               .map<DropdownMenuItem<String>>((String value) {
@@ -52,10 +67,6 @@ class FormatButton extends StatelessWidget {
         ),
       ),
     );
-
-
-
-    
     //   GestureDetector(
     //   onTap: () => onTap(_nextFormat()),
     //   child: Container(
@@ -69,15 +80,14 @@ class FormatButton extends StatelessWidget {
     // );
   }
 
-  String get _formatButtonText => showsNextFormat
-      ? availableCalendarFormats[_nextFormat()]!
-      : availableCalendarFormats[calendarFormat]!;
+  // String get _formatButtonText => showsNextFormat
+  //     ? availableCalendarFormats[_nextFormat()]!
+  //     : availableCalendarFormats[calendarFormat]!;
 
-  CalendarFormat _nextFormat() {
+  CalendarFormat _nextFormat(CalendarFormat calendarFormat) {
     final formats = availableCalendarFormats.keys.toList();
     int id = formats.indexOf(calendarFormat);
-    id = (id + 1) % formats.length;
+    //id = (id) % formats.length;
     return formats[id];
   }
 }
-

@@ -29,38 +29,46 @@ class FormatButton extends StatefulWidget {
 }
 
 class _FormatButtonState extends State<FormatButton> {
+
+  String showValue = "Week";
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
         child: DropdownButton<String>(
-          value: widget.newValue,
+          value: showValue,
           elevation: 0,
-          style: const TextStyle(color: Colors.deepPurple),
+          style: const TextStyle(color: Colors.black),
           underline: Container(
-            height: 1,
+            height: 0,
             color: Colors.blue,
           ),
           onChanged: (String? newValue) {
 
-            print("rohannn:: ${newValue}");
             if (newValue == "Week") {
-              // availableCalendarFormats[CalendarFormat.week];
               widget.onTap(_nextFormat(CalendarFormat.week));
-            } else if (newValue == "2 Week") {
-              // availableCalendarFormats[CalendarFormat.twoWeeks];
+              setState(() {
+                showValue = "Week";
+              });
+
+            } else if (newValue == "2 Weeks") {
               widget.onTap(_nextFormat(CalendarFormat.twoWeeks));
+              setState(() {
+                showValue = "2 Weeks";
+              });
             } else if (newValue == "Month") {
-              // availableCalendarFormats[CalendarFormat.month];
               widget.onTap(_nextFormat(CalendarFormat.month));
+              setState(() {
+                showValue = "Month";
+              });
             }
 
           },
-          items: <String>['Week', '2 Week', 'Month']
+          items: <String>['Week', '2 Weeks', 'Month']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value),
+              child: Text(value , style: TextStyle(color: Colors.black),),
             );
           }).toList(),
         ),

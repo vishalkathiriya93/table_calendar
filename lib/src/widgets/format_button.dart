@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../shared/utils.dart' show CalendarFormat;
 
-class FormatButton extends StatelessWidget {
+class FormatButton extends StatefulWidget {
   final CalendarFormat calendarFormat;
   final ValueChanged<CalendarFormat> onTap;
   final TextStyle textStyle;
@@ -25,11 +25,16 @@ class FormatButton extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<FormatButton> createState() => _FormatButtonState();
+}
+
+class _FormatButtonState extends State<FormatButton> {
+  @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
         child: DropdownButton<String>(
-          value: newValue,
+          value: widget.newValue,
           elevation: 0,
           style: const TextStyle(color: Colors.deepPurple),
           underline: Container(
@@ -41,20 +46,14 @@ class FormatButton extends StatelessWidget {
             print("rohannn:: ${newValue}");
             if (newValue == "Week") {
               // availableCalendarFormats[CalendarFormat.week];
-              onTap(_nextFormat(CalendarFormat.week));
+              widget.onTap(_nextFormat(CalendarFormat.week));
             } else if (newValue == "2 Week") {
               // availableCalendarFormats[CalendarFormat.twoWeeks];
-              onTap(_nextFormat(CalendarFormat.twoWeeks));
+              widget.onTap(_nextFormat(CalendarFormat.twoWeeks));
             } else if (newValue == "Month") {
               // availableCalendarFormats[CalendarFormat.month];
-              onTap(_nextFormat(CalendarFormat.month));
+              widget.onTap(_nextFormat(CalendarFormat.month));
             }
-
-
-
-            // setState(() {
-            //   dropdownValue = newValue!;
-            // });
 
           },
           items: <String>['Week', '2 Week', 'Month']
@@ -81,11 +80,8 @@ class FormatButton extends StatelessWidget {
   }
 
   // String get _formatButtonText => showsNextFormat
-  //     ? availableCalendarFormats[_nextFormat()]!
-  //     : availableCalendarFormats[calendarFormat]!;
-
   CalendarFormat _nextFormat(CalendarFormat calendarFormat) {
-    final formats = availableCalendarFormats.keys.toList();
+    final formats = widget.availableCalendarFormats.keys.toList();
     int id = formats.indexOf(calendarFormat);
     //id = (id) % formats.length;
     return formats[id];

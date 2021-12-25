@@ -1,6 +1,3 @@
-// Copyright 2019 Aleksander Woźniak
-// SPDX-License-Identifier: Apache-2.0
-
 import 'package:flutter/material.dart';
 
 import '../shared/utils.dart' show CalendarFormat;
@@ -12,32 +9,61 @@ class FormatButton extends StatelessWidget {
   final Decoration decoration;
   final EdgeInsets padding;
   final bool showsNextFormat;
+  String newValue = "Week";
   final Map<CalendarFormat, String> availableCalendarFormats;
 
-  const FormatButton({
+  FormatButton({
     Key? key,
     required this.calendarFormat,
     required this.onTap,
     required this.textStyle,
     required this.decoration,
     required this.padding,
+    this.newValue = "Week",
     required this.showsNextFormat,
     required this.availableCalendarFormats,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => onTap(_nextFormat()),
+    return Center(
       child: Container(
-        decoration: decoration,
-        padding: padding,
-        child: Text(
-          _formatButtonText,
-          style: textStyle,
+        child: DropdownButton<String>(
+          value: newValue,
+          elevation: 0,
+
+          style: const TextStyle(color: Colors.deepPurple),
+          underline: Container(
+            height: 1,
+            color: Colors.blue,
+          ),
+          onChanged: (String? newValue) {
+            // setState(() {
+            //   dropdownValue = newValue!;
+            // });
+          },
+          items: <String>['Week', '2 Week', 'Month']
+              .map<DropdownMenuItem<String>>((String value) {
+            return DropdownMenuItem<String>(
+              value: value,
+              child: Text(value),
+            );
+          }).toList(),
         ),
       ),
     );
+
+    //   GestureDetector(
+    //   onTap: () => onTap(_nextFormat()),
+    //   child: Container(
+    //     decoration: decoration,
+    //     padding: padding,
+    //     child: Text(
+    //       _formatButtonText,
+    //       style: textStyle,
+    //     ),
+    //   ),
+    // );
   }
 
   String get _formatButtonText => showsNextFormat
@@ -48,7 +74,7 @@ class FormatButton extends StatelessWidget {
     final formats = availableCalendarFormats.keys.toList();
     int id = formats.indexOf(calendarFormat);
     id = (id + 1) % formats.length;
-
     return formats[id];
   }
 }
+

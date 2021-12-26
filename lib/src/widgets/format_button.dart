@@ -29,8 +29,8 @@ class FormatButton extends StatefulWidget {
 }
 
 class _FormatButtonState extends State<FormatButton> {
-
   String showValue = "Week";
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -44,13 +44,11 @@ class _FormatButtonState extends State<FormatButton> {
             color: Colors.blue,
           ),
           onChanged: (String? newValue) {
-
             if (newValue == "Week") {
               widget.onTap(_nextFormat(CalendarFormat.week));
               setState(() {
                 showValue = "Week";
               });
-
             } else if (newValue == "2 Weeks") {
               widget.onTap(_nextFormat(CalendarFormat.twoWeeks));
               setState(() {
@@ -62,13 +60,38 @@ class _FormatButtonState extends State<FormatButton> {
                 showValue = "Month";
               });
             }
-
           },
           items: <String>['Week', '2 Weeks', 'Month']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
-              child: Text(value , style: TextStyle(color: Colors.black),),
+              child: Row(
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(8),
+                      height: 30,
+                      width: 30,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFE8570F),
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child: Center(
+                          child: Image.asset(
+                        value == 'Week'
+                            ? "assets/icons/calendar.png"
+                            : value == "2 Weeks"
+                                ? "assets/icons/calendar1.png"
+                                : "assets/icons/calendar1.png",
+                      ))),
+                  SizedBox(
+                    width: 16 / 2,
+                  ),
+                  Text(
+                    value,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ],
+              ),
             );
           }).toList(),
         ),

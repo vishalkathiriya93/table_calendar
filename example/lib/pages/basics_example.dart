@@ -44,6 +44,7 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
             });
           }
         },
+        
         onFormatChanged: (format) {
           if (_calendarFormat != format) {
             // Call `setState()` when updating calendar format
@@ -52,6 +53,9 @@ class _TableBasicsExampleState extends State<TableBasicsExample> {
             });
           }
         },
+        headerStyle: HeaderStyle(
+          leftChevronPadding: EdgeInsets.all(0)
+        ),
         onPageChanged: (focusedDay) {
           // No need to call `setState()` here
           _focusedDay = focusedDay;

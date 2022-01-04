@@ -49,48 +49,66 @@ class CalendarHeader extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.max,
         children: [
-          if (headerStyle.leftChevronVisible)
-            CustomIconButton(
-              icon: headerStyle.leftChevronIcon,
-              onTap: onLeftChevronTap,
-              margin: headerStyle.leftChevronMargin,
-              padding: headerStyle.leftChevronPadding,
-            ),
+
           Expanded(
-            child: headerTitleBuilder?.call(context, focusedMonth) ??
-                GestureDetector(
-                  onTap: onHeaderTap,
-                  onLongPress: onHeaderLongPress,
-                  child: Text(
-                    text,
-                    style: headerStyle.titleTextStyle,
-                    textAlign: headerStyle.titleCentered
-                        ? TextAlign.center
-                        : TextAlign.start,
+            child: Row(
+              children: [
+                if (headerStyle.leftChevronVisible)
+                  CustomIconButton(
+                    icon: headerStyle.leftChevronIcon,
+                    onTap: onLeftChevronTap,
+                    margin: headerStyle.leftChevronMargin,
+                    padding: headerStyle.leftChevronPadding,
                   ),
-                ),
+                headerTitleBuilder?.call(context, focusedMonth) ??
+                    GestureDetector(
+                      onTap: onHeaderTap,
+                      onLongPress: onHeaderLongPress,
+                      child: Text(
+                        text,
+                        style: headerStyle.titleTextStyle,
+                        textAlign: headerStyle.titleCentered
+                            ? TextAlign.center
+                            : TextAlign.start,
+                      ),
+                    ),
+                if (headerStyle.rightChevronVisible)
+                  CustomIconButton(
+                    icon: headerStyle.rightChevronIcon,
+                    onTap: onRightChevronTap,
+                    margin: headerStyle.leftChevronMargin,
+                    padding: headerStyle.leftChevronPadding,
+                  ),
+              ],
+            ),
           ),
+
+
+
           if (headerStyle.formatButtonVisible &&
               availableCalendarFormats.length > 1)
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: FormatButton(
-                onTap: onFormatButtonTap,
-                availableCalendarFormats: availableCalendarFormats,
-                calendarFormat: calendarFormat,
-                decoration: headerStyle.formatButtonDecoration,
-                padding: headerStyle.formatButtonPadding,
-                textStyle: headerStyle.formatButtonTextStyle,
-                showsNextFormat: headerStyle.formatButtonShowsNext,
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: FormatButton(
+                    onTap: onFormatButtonTap,
+                    availableCalendarFormats: availableCalendarFormats,
+                    calendarFormat: calendarFormat,
+                    decoration: headerStyle.formatButtonDecoration,
+                    padding: headerStyle.formatButtonPadding,
+                    textStyle: headerStyle.formatButtonTextStyle,
+                    showsNextFormat: headerStyle.formatButtonShowsNext,
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                )
+              ],
             ),
-          if (headerStyle.rightChevronVisible)
-            CustomIconButton(
-              icon: headerStyle.rightChevronIcon,
-              onTap: onRightChevronTap,
-              margin: headerStyle.rightChevronMargin,
-              padding: headerStyle.rightChevronPadding,
-            ),
+
         ],
       ),
     );

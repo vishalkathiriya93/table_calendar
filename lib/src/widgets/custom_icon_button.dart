@@ -22,7 +22,7 @@ class CustomIconButton extends StatelessWidget {
     return Container(
       height: 24,
       width: 24,
-      margin: EdgeInsets.symmetric(horizontal: 8),
+      margin: margin,
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

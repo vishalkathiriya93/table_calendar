@@ -57,7 +57,7 @@ class CalendarHeader extends StatelessWidget {
                   CustomIconButton(
                     icon: headerStyle.leftChevronIcon,
                     onTap: onLeftChevronTap,
-                    margin: headerStyle.leftChevronMargin,
+                    margin: EdgeInsets.symmetric(horizontal: 16),
                     padding: headerStyle.leftChevronPadding,
                   ),
                 headerTitleBuilder?.call(context, focusedMonth) ??
@@ -76,7 +76,7 @@ class CalendarHeader extends StatelessWidget {
                   CustomIconButton(
                     icon: headerStyle.rightChevronIcon,
                     onTap: onRightChevronTap,
-                    margin: headerStyle.leftChevronMargin,
+                    margin: EdgeInsets.symmetric(horizontal: 16),
                     padding: headerStyle.leftChevronPadding,
                   ),
               ],

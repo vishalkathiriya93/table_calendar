@@ -100,7 +100,6 @@ class CalendarHeader extends StatelessWidget {
                     decoration: headerStyle.formatButtonDecoration,
                     padding: headerStyle.formatButtonPadding,
                     textStyle: headerStyle.formatButtonTextStyle,
-                    showsNextFormat: headerStyle.formatButtonShowsNext,
                   ),
                 ),
                 SizedBox(

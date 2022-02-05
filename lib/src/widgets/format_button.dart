@@ -8,7 +8,8 @@ class FormatButton extends StatefulWidget {
   final TextStyle textStyle;
   final Decoration decoration;
   final EdgeInsets padding;
-  final bool showsNextFormat;
+  bool showsNextFormat;
+
   String newValue = "Week";
   final Map<CalendarFormat, String> availableCalendarFormats;
 
@@ -20,7 +21,7 @@ class FormatButton extends StatefulWidget {
     required this.decoration,
     required this.padding,
     this.newValue = "Week",
-    required this.showsNextFormat,
+    this.showsNextFormat = true,
     required this.availableCalendarFormats,
   }) : super(key: key);
 
@@ -29,14 +30,21 @@ class FormatButton extends StatefulWidget {
 }
 
 class _FormatButtonState extends State<FormatButton> {
-  String showValue = "Week";
+  CalendarFormat? currrentFormat;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    currrentFormat = widget.calendarFormat;
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: Container(
         child: DropdownButton<String>(
-          value: showValue,
+          value: getCurrent(),
           elevation: 0,
           style: const TextStyle(color: Colors.black),
           underline: Container(
@@ -45,23 +53,23 @@ class _FormatButtonState extends State<FormatButton> {
           ),
           onChanged: (String? newValue) {
             if (newValue == "Week") {
-              widget.onTap(_nextFormat(CalendarFormat.week));
-              setState(() {
-                showValue = "Week";
-              });
-            } else if (newValue == "2 Weeks") {
-              widget.onTap(_nextFormat(CalendarFormat.twoWeeks));
-              setState(() {
-                showValue = "2 Weeks";
-              });
+              widget.showsNextFormat = false;
+              widget.onTap(_nextFormat1(CalendarFormat.week));
+              currrentFormat = CalendarFormat.week;
+              setState(() {});
+            } else if (newValue == "2 weeks") {
+              widget.showsNextFormat = false;
+              widget.onTap(_nextFormat1(CalendarFormat.twoWeeks));
+              currrentFormat = CalendarFormat.twoWeeks;
+              setState(() {});
             } else if (newValue == "Month") {
-              widget.onTap(_nextFormat(CalendarFormat.month));
-              setState(() {
-                showValue = "Month";
-              });
+              widget.showsNextFormat = false;
+              widget.onTap(_nextFormat1(CalendarFormat.month));
+              currrentFormat = CalendarFormat.month;
+              setState(() {});
             }
           },
-          items: <String>['Week', '2 Weeks', 'Month']
+          items: <String>['Week', '2 weeks', 'Month']
               .map<DropdownMenuItem<String>>((String value) {
             return DropdownMenuItem<String>(
               value: value,
@@ -80,8 +88,8 @@ class _FormatButtonState extends State<FormatButton> {
                         value == 'Week'
                             ? "assets/icons/calendar.png"
                             : value == "2 Weeks"
-                                ? "assets/icons/calendar1.png"
-                                : "assets/icons/calendar3.png",
+                                ? "assets/icons/calendar.png"
+                                : "assets/icons/calendar.png",
                       ))),
                   SizedBox(
                     width: 16 / 2,
@@ -97,24 +105,46 @@ class _FormatButtonState extends State<FormatButton> {
         ),
       ),
     );
-    //   GestureDetector(
-    //   onTap: () => onTap(_nextFormat()),
-    //   child: Container(
-    //     decoration: decoration,
-    //     padding: padding,
-    //     child: Text(
-    //       _formatButtonText,
-    //       style: textStyle,
-    //     ),
-    //   ),
-    // );
   }
 
-  // String get _formatButtonText => showsNextFormat
-  CalendarFormat _nextFormat(CalendarFormat calendarFormat) {
+  CalendarFormat _nextFormat1(CalendarFormat calendarFormat) {
     final formats = widget.availableCalendarFormats.keys.toList();
     int id = formats.indexOf(calendarFormat);
-    //id = (id) % formats.length;
+    return formats[id];
+  }
+
+  String getCurrent() {
+    if (widget.showsNextFormat == false) {
+      if (currrentFormat == CalendarFormat.month) {
+        return "Month";
+      } else if (currrentFormat == CalendarFormat.week) {
+        return "Week";
+      } else if (currrentFormat == CalendarFormat.twoWeeks) {
+        return "2 weeks";
+      } else {
+        return "";
+      }
+    } else {
+      if (widget.calendarFormat == CalendarFormat.month) {
+        return "Month";
+      } else if (widget.calendarFormat == CalendarFormat.week) {
+        return "Week";
+      } else if (widget.calendarFormat == CalendarFormat.twoWeeks) {
+        return "2 weeks";
+      } else {
+        return "";
+      }
+    }
+  }
+
+  String get _formatButtonText => widget.showsNextFormat
+      ? widget.availableCalendarFormats[_nextFormat()]!
+      : widget.availableCalendarFormats[currrentFormat]!;
+
+  CalendarFormat _nextFormat() {
+    final formats = widget.availableCalendarFormats.keys.toList();
+    int id = formats.indexOf(widget.calendarFormat);
+    id = (id + 1) % formats.length;
     return formats[id];
   }
 }

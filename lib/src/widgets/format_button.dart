@@ -87,7 +87,7 @@ class _FormatButtonState extends State<FormatButton> {
                           child: Image.asset(
                         value == 'Week'
                             ? "assets/icons/calendar.png"
-                            : value == "2 Weeks"
+                            : value == "2 weeks"
                                 ? "assets/icons/calendar1.png"
                                 : "assets/icons/calendar3.png",
                       ))),

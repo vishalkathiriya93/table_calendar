@@ -88,8 +88,8 @@ class _FormatButtonState extends State<FormatButton> {
                         value == 'Week'
                             ? "assets/icons/calendar.png"
                             : value == "2 Weeks"
-                                ? "assets/icons/calendar.png"
-                                : "assets/icons/calendar.png",
+                                ? "assets/icons/calendar1.png"
+                                : "assets/icons/calendar3.png",
                       ))),
                   SizedBox(
                     width: 16 / 2,

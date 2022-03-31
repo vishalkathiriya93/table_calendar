@@ -96,7 +96,7 @@ class _FormatButtonState extends State<FormatButton> {
                   ),
                   Text(
                     value,
-                    style: TextStyle(color: Colors.black),
+                    style: widget.textStyle,
                   ),
                 ],
               ),
